@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
-const toughtSchema = new Schema(
+const thoughtSchema = new Schema(
   {
-    toughtText: {
+    thoughtText: {
       type: String,
       default: false,
     },
@@ -29,7 +29,7 @@ const toughtSchema = new Schema(
 );
 
 // Create a virtual property `tagCount` that gets the amount of comments per user
-toughtSchema
+thoughtSchema
   .virtual('reactionCount')
   // Getter
   .get(function () {
@@ -37,6 +37,6 @@ toughtSchema
   });
 
 // Initialize our Post model
-const Tought = model('tought', toughtSchema);
+const Thought = model('tought', thoughtSchema);
 
 module.exports = Tought;
