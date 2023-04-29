@@ -1,9 +1,11 @@
 const { Schema, model } = require('mongoose');
 const userSchema = new Schema(
   {
-    toughts: [
+    thoughts: [
     {  type:Schema.Types.ObjectId,
-      ref:"Toughts"
+      
+      
+      ref:"Thoughts"
       }
   ],
     createdAt: {
@@ -18,12 +20,27 @@ const userSchema = new Schema(
     ],
     UserName: {
       type: String,
+      require:true,
+      required:[true, 'email required'],
+      trim:true,
+     
+     
+    }
+  ,
   
-    },
     email: {
       type: String,
+      require:true,
+      unique:true,
+      validate: {
+        validator: function(v) {
+          return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v);
+        },
+        message: props => `${props.value} is not a valid email  format!`
+      }
   
     },
+  
   },
   {
     toJSON: {
