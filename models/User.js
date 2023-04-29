@@ -11,6 +11,7 @@ const userSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get:formatter
     },
     friends: [
       {
@@ -57,6 +58,9 @@ userSchema
   .get(function () {
     return this.friends.length;
   });
+  function formatter(time){
+    return time.toString()
+  }
 
 // Initialize our Post model
 const User = model('user', userSchema);
