@@ -3,7 +3,8 @@ const reactionSchema = new Schema({
 
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        get:formatter
     },
 
     UserName: {
@@ -20,13 +21,15 @@ const reactionSchema = new Schema({
     }
 }, {
     toJSON: {
-        virtuals: true
+        virtuals: true,
+        getters:true
     },
     id: false
 });
 
 function formatter(time){
-    return 
+    let newTime=new Date(`${time}`)
+    return newTime.toString()
   }
 const Reaction = model('reaction', reactionSchema);
 

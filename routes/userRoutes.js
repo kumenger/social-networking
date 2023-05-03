@@ -34,7 +34,8 @@ Router.route('/allusers').get( async (req, res) => {
 Router.route('/:id').get( async (req, res) => {
     try {
         let id=req.params.id
-        let user = await User.findOne({_id:id})
+        let user = await User.findOne({_id:id}).select('-__v')
+        .populate('thoughts');
         if (!user) {
             res.status(400).json({msg: "user not found"})
         }
@@ -66,7 +67,44 @@ Router.route('/remove/:id').delete( async (req, res) => {
         if (!user) {
             res.status(400).json({msg: "user not found"})
         }
-        res.json({msg:`${user.UserName} is deleted form database`})
+        res.json({msg:`${user.userName} is deleted form database`})
+    } catch (error) {
+        return res.status(500).json({error: error.message});
+    }
+ 
+})
+Router.route('/:userId/friends/:friendId').post( async (req, res) => {
+    try {
+        let user = await User.findOne({_id:req.params.userId})
+        if (!user) {
+            res.status(400).json({msg: " user not found"})
+        }
+       
+       
+       
+     
+        await User.updateOne({ _id: req.params.userId}, { $push: { friends:new ObjectId(req.params.friendId) } },{new:true})
+       
+        res.json({msg:"friend add"})
+    } catch (error) {
+        return res.status(500).json({error: error.message});
+    }
+ 
+})
+Router.route('/:userId/friends/:friendId').delete( async (req, res) => {
+    try {
+    
+   
+          let user = await User.findOne({_id:req.params.userId})
+        if (!user) {
+            res.status(400).json({msg: " user not found"})
+        }
+       
+       
+     
+        await User.updateOne({ _id: req.params.userId}, { $pull: { friends:new ObjectId(req.params.friendId) } },{new:true})
+       
+        res.json({msg:"reaction removed"})
     } catch (error) {
         return res.status(500).json({error: error.message});
     }

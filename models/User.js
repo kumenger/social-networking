@@ -3,25 +3,19 @@ const userSchema = new Schema(
   {
     thoughts: [
     {  type:Schema.Types.ObjectId,
-      
-      
-      ref:"Thoughts"
+      ref:"thoughts"
       }
   ],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get:formatter
-    },
+   
     friends: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'user',
       },
     ],
-    UserName: {
+    userName: {
       type: String,
-      require:true,
+      unique:true,
       required:[true, 'email required'],
       trim:true,
      
@@ -51,16 +45,14 @@ const userSchema = new Schema(
   }
 );
 
-// Create a virtual property `tagCount` that gets the amount of comments per user
+
 userSchema
   .virtual('freindsCount')
   // Getter
   .get(function () {
     return this.friends.length;
   });
-  function formatter(time){
-    return time.toString()
-  }
+  
 
 // Initialize our Post model
 const User = model('user', userSchema);
