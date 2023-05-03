@@ -20,6 +20,7 @@ const thoughtSchema = new Schema(
     ],
     UserName: {
       type: String,
+      required:true
   
     },
   },
@@ -43,4 +44,4 @@ function formatter(time){
 }
 const Thought = model('tought', thoughtSchema);
 
-module.exports = Tought;
+module.exports = Thought;

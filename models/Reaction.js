@@ -7,11 +7,15 @@ const reactionSchema = new Schema({
     },
 
     UserName: {
-        type: String
+        type: String,
+        require:true
+
 
     },
     reactionBody: {
-        type: String
+        type: String,
+        require:true,
+        max:280
 
     }
 }, {
@@ -21,7 +25,9 @@ const reactionSchema = new Schema({
     id: false
 });
 
-
+function formatter(time){
+    return 
+  }
 const Reaction = model('reaction', reactionSchema);
 
-module.exports = Reactions;
+module.exports = Reaction;
