@@ -44,4 +44,32 @@ Router.route('/:id').get( async (req, res) => {
     }
  
 })
+Router.route('/update/:id').put( async (req, res) => {
+    try {
+        let id=req.params.id
+       
+        let user = await User.findOneAndUpdate({_id:id},req.body,{new:true})
+        if (!user) {
+            res.status(400).json({msg: "user not found"})
+        }
+        res.json(user)
+    } catch (error) {
+        return res.status(500).json({error: error.message});
+    }
+ 
+})
+Router.route('/remove/:id').delete( async (req, res) => {
+    try {
+        let id=req.params.id
+       
+        let user = await User.findOneAndDelete({_id:id})
+        if (!user) {
+            res.status(400).json({msg: "user not found"})
+        }
+        res.json({msg:`${user.UserName} is deleted form database`})
+    } catch (error) {
+        return res.status(500).json({error: error.message});
+    }
+ 
+})
 module.exports = Router;
