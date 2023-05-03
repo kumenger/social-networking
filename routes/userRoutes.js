@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const Router = require("express").Router();
-
+const { ObjectId } = require('mongoose').Types;
 Router.route('/create').post( async (req, res) => {
     try {
         let Email=req.body.email
@@ -35,7 +35,7 @@ Router.route('/:id').get( async (req, res) => {
     try {
         let id=req.params.id
         let user = await User.findOne({_id:id}).select('-__v')
-        .populate('thoughts');
+        .populate('thoughts').populate('friends');
         if (!user) {
             res.status(400).json({msg: "user not found"})
         }
@@ -104,7 +104,7 @@ Router.route('/:userId/friends/:friendId').delete( async (req, res) => {
      
         await User.updateOne({ _id: req.params.userId}, { $pull: { friends:new ObjectId(req.params.friendId) } },{new:true})
        
-        res.json({msg:"reaction removed"})
+        res.json({msg:"friend removed"})
     } catch (error) {
         return res.status(500).json({error: error.message});
     }

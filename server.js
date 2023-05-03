@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api/user',userRouter);
 app.use('/api/thoughts',toughtRouter);
-app.use('/api/user',userRouter);
 app.use('/api/reaction',reactionRoutes);
 db.once('open', () => {
 console.log("Database Connected")
