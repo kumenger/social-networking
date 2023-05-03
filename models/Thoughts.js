@@ -15,10 +15,10 @@ const thoughtSchema = new Schema(
     reactions: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Reaction',
+        ref: 'reaction',
       },
     ],
-    UserName: {
+    userName:{
       type: String,
       required:true
   
@@ -27,6 +27,7 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+       getters: true 
     },
     id: false,
   }
@@ -40,8 +41,9 @@ thoughtSchema .virtual('reactionCount')
   });
 
 function formatter(time){
-  return 
+  let newTime=new Date(`${time}`)
+  return newTime.toString()
 }
-const Thought = model('tought', thoughtSchema);
+const Thought = model('thoughts', thoughtSchema);
 
 module.exports = Thought;
