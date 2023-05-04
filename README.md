@@ -60,11 +60,7 @@ developed an application using mongodb along with mongoose where a usere can cre
 
 
 
-# Links
 
-<p>&nbsp;</p>
-
-https://github.com/Nmargolis00/image-AI
 
 <p>&nbsp;</p>
 
